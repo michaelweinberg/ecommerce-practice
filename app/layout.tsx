@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import { Inter, Figtree } from "next/font/google";
 import "@/assets/styles/globals.css";
 import { cn } from "@/lib/utils";
+import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 
 const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-  title: "Practice Store",
-  description: "Ecommerce Store with NextJS",
+  title: {
+    template: `%s | My Store`,
+    default: APP_NAME,  
+  },
+  description: APP_DESCRIPTION,
+  metadataBase: new URL(SERVER_URL)
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
