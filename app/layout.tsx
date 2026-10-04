@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Figtree } from "next/font/google";
+import { Inter, Figtree, Geist } from "next/font/google";
 import "@/assets/styles/globals.css";
 import { cn } from "@/lib/utils";
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
+import { ThemeProvider } from "next-themes";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({subsets: ['latin']})
 
@@ -21,9 +22,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", inter.className, "font-sans", figtree.variable)}
+      className={cn("h-full", "antialiased", inter.className, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider
+          attribute='class'
+          defaultTheme="light"
+          enableSystem
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
