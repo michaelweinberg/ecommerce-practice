@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/button";
+import ProductList from "@/components/shared/header/product/product-list";
+// import { Button } from "@/components/ui/button";
+import sampleData from '@/db/sample-data'
 
 
 export const metadata = {
@@ -6,7 +8,12 @@ export const metadata = {
 }
 
 const Homepage = () => {
-  return ( <Button>Click me!</Button> );
+  console.log('sample data', sampleData.products);
+  return ( 
+    <>
+      <ProductList data={sampleData.products} title="Newest Arrivals" />
+    </>
+  );
 }
  
 export default Homepage;
