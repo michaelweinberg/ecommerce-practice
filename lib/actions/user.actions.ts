@@ -2,7 +2,8 @@
 
 import { signInFormSchema } from "../validators";
 import { signIn, signOut} from "@/auth";
- import { unstable_rethrow } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+
 
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
     try {
@@ -11,11 +12,13 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
             password: formData.get('password')
         });
         
-        await signIn('credential', user);
+        await signIn('credentials', user);
 
         return { success: true, message: 'Signed in successfully'}
     } catch(error) {
-        unstable_rethrow(error);
+        if (isRedirectError(error)) {
+            throw error;
+        }
         return { success: false, message: 'Invalid email or password' };
     }
 }

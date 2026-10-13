@@ -50,7 +50,7 @@ export const config = {
         async session({ session, user, trigger, token} : any) {
             session.user.id = token.sub;
 
-            // if there is an uupdate, set the user name
+            // if there is an update, set the user name
             if(trigger === 'update'){
                 session.user.name = user.name;
             }
