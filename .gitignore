@@ -37,3 +37,4 @@ next-env.d.ts
 
 /lib/generated/prisma
 /db/sample-data.ts
+ecommerce-practice.code-workspace
