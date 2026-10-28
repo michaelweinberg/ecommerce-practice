@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { signInWithCredentials } from "@/lib/actions/user.actions";
+import { useSearchParams } from "next/navigation";
 
 
 const SignInButon = () => {
@@ -22,48 +23,52 @@ const SignInButon = () => {
 
 const CredentialsSignInForm = () => {
 
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
 
     const [data, action] = useActionState(signInWithCredentials, {
         success: false,
         message: ''
     });
-    return <form action={action}>
-        <div className="space-y-6">
-            <div>
-                <Label htmlFor="email">Email</Label>
-                <Input 
-                    id='email' 
-                    name='email' 
-                    type='email' 
-                    required 
-                    autoComplete='email'
-                    defaultValue={signInDefaultValues.email} />
-            </div>
-        
-            <div>
-                <Label htmlFor="password">Password</Label>
-                <Input 
-                    id='password' 
-                    name='password' 
-                    type='password' 
-                    required 
-                    autoComplete='password'
-                    defaultValue={signInDefaultValues.password} />
-            </div>
-            <div>
-                <SignInButon />
-            </div>
-            {data && !data.success && (
-                <div className="text-center text-destructive">
-                    {data.message}                    
+    return ( 
+        <form action={action}>
+            <input type="hidden" name="callbackUrl" value={callbackUrl} />
+            <div className="space-y-6">
+                <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input 
+                        id='email' 
+                        name='email' 
+                        type='email' 
+                        required 
+                        autoComplete='email'
+                        defaultValue={signInDefaultValues.email} />
                 </div>
-            )}
-            <div className="text-sm text-center text-muted-foregroud">
-                Don&apos;t have an account?{' '}
-                <Link href="/sign-up" target="_self" className="link">Sign up</Link>
+            
+                <div>
+                    <Label htmlFor="password">Password</Label>
+                    <Input 
+                        id='password' 
+                        name='password' 
+                        type='password' 
+                        required 
+                        autoComplete='password'
+                        defaultValue={signInDefaultValues.password} />
+                </div>
+                <div>
+                    <SignInButon />
+                </div>
+                {data && !data.success && (
+                    <div className="text-center text-destructive">
+                        {data.message}                    
+                    </div>
+                )}
+                <div className="text-sm text-center text-muted-foregroud">
+                    Don&apos;t have an account?{' '}
+                    <Link href="/sign-up" target="_self" className="link">Sign up</Link>
+                </div>
             </div>
-        </div>
-    </form>;
+        </form>);
 }
  
 export default CredentialsSignInForm;
